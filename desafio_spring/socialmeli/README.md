@@ -8,3 +8,14 @@
 # Funcionalidades
 ## SIGN - Seguir um usuário
     - POST /users/{userId}/follow/{userIdToFollow}
+        Status Code 200 (tudo OK)
+        Status Code 400 (Bad Request)
+
+## Count followers - Contador de seguidores
+    - GET /users/{userId}/followers/count/    	
+    {
+        "userId": 1569,
+        "userName": "vendedor1",
+        "followers_count": 35
+    }
+

@@ -5,19 +5,20 @@ package br.com.mercadolivre.socialmeli.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.mercadolivre.socialmeli.dto.UserDTO;
 import br.com.mercadolivre.socialmeli.exception.CommonStatus;
 import br.com.mercadolivre.socialmeli.services.UserService;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping(value = "/users", produces = "application/json")
 public class UsersController {
     
-
     private UserService service;
 
     @Autowired
@@ -35,6 +36,16 @@ public class UsersController {
         } else {
             return new ResponseEntity<>("CANNOT FOLLOW", HttpStatus.BAD_REQUEST);
         }
+    }
+
+
+    @GetMapping("/{userId}/followers/count")
+    public ResponseEntity<?> countFollows (@PathVariable Long userId){
+        UserDTO userDTO = service.countFollows(userId);
+        if (userDTO!=null){
+            return new ResponseEntity<>(userDTO.followersCount(), HttpStatus.OK);
+        }
+        return new  ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 

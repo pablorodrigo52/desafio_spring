@@ -1,38 +1,38 @@
-package br.com.mercadolivre.socialmeli.entities;
+package br.com.mercadolivre.socialmeli.dto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.mercadolivre.socialmeli.dto.UserDTO;
+import br.com.mercadolivre.socialmeli.entities.User;
 
 /**
  * User
  */
-public class User {
+public class UserDTO {
 
     private Long uuid;
     private String name;
     private List<Long> following; // QUEM EU ESTOU SEGUINDO
 
-    public User() {
+    public UserDTO() {
     }
 
-    public User(long uuid, String name) {
+    public UserDTO(long uuid, String name) {
         this.uuid = uuid;
         this.name = name;
         this.following = new ArrayList<>();
     }
 
-    public User(long uuid, String name, List<Long> following) {
+    public UserDTO(long uuid, String name, List<Long> following) {
         this.uuid = uuid;
         this.name = name;
         this.following = following;
     }
 
-    public User(UserDTO userDTO){
-        this.uuid = userDTO.getUuid();
-        this.name = userDTO.getName();
-        this.following = userDTO.getFollowing();
+    public UserDTO(User user){
+        this.uuid = user.getUuid();
+        this.name = user.getName();
+        this.following = user.getFollowing();
     }
 
     public List<Long> getFollowing() {
@@ -59,4 +59,19 @@ public class User {
         this.name = name;
     }
 
+    public String followersCount() {
+        return "{" +
+            " \"userId\"=" + getUuid() + "" +
+            ", \"userName\"=\"" + getName() + "\"" +
+            ", \"followers_count\"=" + getFollowing().size() + "" +
+            "}";
+    }
+
+    public static User convert (UserDTO userDTO){
+        return new User(userDTO);
+    }
+
+    public static UserDTO convert (User user){
+        return new UserDTO(user);
+    }
 }

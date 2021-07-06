@@ -3,6 +3,7 @@ package br.com.mercadolivre.socialmeli.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.mercadolivre.socialmeli.dto.UserDTO;
 import br.com.mercadolivre.socialmeli.entities.User;
 import br.com.mercadolivre.socialmeli.exception.CommonStatus;
 import br.com.mercadolivre.socialmeli.repository.UserRepository;
@@ -16,7 +17,7 @@ public class UserService {
         this.repository = repository;
     }
 
-    public CommonStatus sign (long userId, long userIdToFollow){
+    public CommonStatus sign (Long userId, long userIdToFollow){
         User user = repository.findById(userId);
         User userToFollow = repository.findById(userIdToFollow);
 
@@ -30,5 +31,14 @@ public class UserService {
             }
         }
         return CommonStatus.USER_NOT_EXISTS;
+    }
+
+    public UserDTO countFollows(Long userId){
+        User user = repository.findById(userId);
+
+        if (user!=null){
+            return UserDTO.convert(user);
+        }
+        return null;
     }
 }
