@@ -17,7 +17,6 @@ import br.com.mercadolivre.socialmeli.services.PostService;
 @RequestMapping("/products")
 public class PostController {
 
-
     private PostService service;
 
     @Autowired
