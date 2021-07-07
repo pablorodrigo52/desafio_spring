@@ -52,8 +52,7 @@ public class UserService {
 
     public UserFollowersDTO followersList(Long userId) {
         User user = repository.findById(userId);
-
-        if (user != null){
+        if (user!=null){
             List<User> followers = repository.getFollowers(userId);
             List<SimpleUserDTO> followersDTOs = new ArrayList<>();
             followersDTOs = followers.stream().map(SimpleUserDTO::convert).collect(Collectors.toList());

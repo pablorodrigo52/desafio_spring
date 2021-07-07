@@ -1,4 +1,4 @@
-package br.com.mercadolivre.socialmeli.entities;
+package br.com.mercadolivre.socialmeli.dto.Post;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -9,20 +9,44 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.OptBoolean;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import br.com.mercadolivre.socialmeli.dto.Post.PostDTO;
+import br.com.mercadolivre.socialmeli.entities.Post;
 
-public class Post {
+public class PostDTO {
 
-    private Long userId, id_post;
+    @NotNull
+    private Long userId;
+
+    @NotNull
+    private Long id_post;
+    
+    @NotNull
+    @JsonSerialize(as = Date.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy",
+            lenient = OptBoolean.FALSE, locale = "pt-BR", timezone = "America/Sao_Paulo")
     private Date date;
-    private Product detail;
+    
+    @NotNull
+    private ProductDTO detail;
+
+    @NotNull
     private int category;
+    
+    @NotNull
     private BigDecimal price;
 
-    public Post() {
+    public PostDTO() {
     }
 
-    public Post(Long userId, Long id_post, Date date, Product detail, int category, BigDecimal price) {
+    public PostDTO(Post post){
+        this.userId = post.getUserId();
+        this.id_post = post.getId_post();
+        this.date = post.getDate();
+        this.detail = ProductDTO.convert(post.getDetail());
+        this.category = post.getCategory();
+        this.price = post.getPrice();
+    }
+
+    public PostDTO(Long userId, Long id_post, Date date, ProductDTO detail, int category, BigDecimal price) {
         this.userId = userId;
         this.id_post = id_post;
         this.date = date;
@@ -56,11 +80,11 @@ public class Post {
         this.date = date;
     }
 
-    public Product getDetail() {
+    public ProductDTO getDetail() {
         return this.detail;
     }
 
-    public void setDetail(Product detail) {
+    public void setDetail(ProductDTO detail) {
         this.detail = detail;
     }
 
@@ -79,5 +103,12 @@ public class Post {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
+    public static PostDTO convert (Post post){
+        return new PostDTO(post);
+    }
     
+    public static Post convert (PostDTO postDTO){
+        return new Post(postDTO.getUserId(), postDTO.getId_post(), postDTO.getDate(), ProductDTO.convert(postDTO.getDetail()), postDTO.getCategory(), postDTO.getPrice());
+    }
 }
