@@ -1,6 +1,6 @@
-package br.com.mercadolivre.socialmeli.dto.User;
+package br.com.mercadolivre.socialmeli.user.dto;
 
-import br.com.mercadolivre.socialmeli.entities.User;
+import br.com.mercadolivre.socialmeli.user.entities.User;
 
 public class SimpleUserDTO {
 

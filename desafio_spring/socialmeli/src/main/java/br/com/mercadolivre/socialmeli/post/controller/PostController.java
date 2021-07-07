@@ -1,4 +1,4 @@
-package br.com.mercadolivre.socialmeli.controller;
+package br.com.mercadolivre.socialmeli.post.controller;
 
 import javax.validation.Valid;
 
@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.mercadolivre.socialmeli.dto.Post.PostDTO;
-import br.com.mercadolivre.socialmeli.dto.Post.PostsByFollowedDTO;
-import br.com.mercadolivre.socialmeli.services.PostService;
+import br.com.mercadolivre.socialmeli.post.dto.PostDTO;
+import br.com.mercadolivre.socialmeli.post.dto.PostsByFollowedDTO;
+import br.com.mercadolivre.socialmeli.post.services.PostService;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 

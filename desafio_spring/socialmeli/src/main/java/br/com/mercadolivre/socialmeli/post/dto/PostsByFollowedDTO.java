@@ -1,4 +1,4 @@
-package br.com.mercadolivre.socialmeli.dto.Post;
+package br.com.mercadolivre.socialmeli.post.dto;
 
 import java.util.ArrayList;
 import java.util.List;

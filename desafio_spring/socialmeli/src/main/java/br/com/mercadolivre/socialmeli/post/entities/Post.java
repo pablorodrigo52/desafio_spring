@@ -1,4 +1,4 @@
-package br.com.mercadolivre.socialmeli.entities;
+package br.com.mercadolivre.socialmeli.post.entities;
 
 import java.math.BigDecimal;
 import java.sql.Date;

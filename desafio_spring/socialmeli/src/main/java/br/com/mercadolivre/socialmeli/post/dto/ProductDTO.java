@@ -1,9 +1,9 @@
-package br.com.mercadolivre.socialmeli.dto.Post;
+package br.com.mercadolivre.socialmeli.post.dto;
 
 
 import javax.validation.constraints.NotNull;
 
-import br.com.mercadolivre.socialmeli.entities.Product;
+import br.com.mercadolivre.socialmeli.post.entities.Product;
 
 public class ProductDTO {
 

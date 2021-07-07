@@ -1,4 +1,4 @@
-package br.com.mercadolivre.socialmeli.helper;
+package br.com.mercadolivre.socialmeli.post.helper;
 
 import java.util.Calendar;
 import java.util.Date;

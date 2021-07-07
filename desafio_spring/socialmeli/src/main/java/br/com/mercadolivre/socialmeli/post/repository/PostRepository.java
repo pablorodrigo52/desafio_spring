@@ -1,4 +1,4 @@
-package br.com.mercadolivre.socialmeli.repository;
+package br.com.mercadolivre.socialmeli.post.repository;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import br.com.mercadolivre.socialmeli.entities.Post;
+import br.com.mercadolivre.socialmeli.post.entities.Post;
 
 @Repository
 public class PostRepository {

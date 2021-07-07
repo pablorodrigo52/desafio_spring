@@ -1,4 +1,4 @@
-package br.com.mercadolivre.socialmeli.services;
+package br.com.mercadolivre.socialmeli.post.services;
 
 
 import java.util.Collections;
@@ -8,14 +8,14 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.mercadolivre.socialmeli.dto.Post.PostsByFollowedDTO;
-import br.com.mercadolivre.socialmeli.dto.Post.SimplePostDTO;
-import br.com.mercadolivre.socialmeli.dto.Post.PostDTO;
-import br.com.mercadolivre.socialmeli.entities.Post;
-import br.com.mercadolivre.socialmeli.entities.User;
-import br.com.mercadolivre.socialmeli.helper.DateUtils;
-import br.com.mercadolivre.socialmeli.repository.PostRepository;
-import br.com.mercadolivre.socialmeli.repository.UserRepository;
+import br.com.mercadolivre.socialmeli.post.dto.PostDTO;
+import br.com.mercadolivre.socialmeli.post.dto.PostsByFollowedDTO;
+import br.com.mercadolivre.socialmeli.post.dto.SimplePostDTO;
+import br.com.mercadolivre.socialmeli.post.entities.Post;
+import br.com.mercadolivre.socialmeli.post.helper.DateUtils;
+import br.com.mercadolivre.socialmeli.post.repository.PostRepository;
+import br.com.mercadolivre.socialmeli.user.entities.User;
+import br.com.mercadolivre.socialmeli.user.repository.UserRepository;
 
 @Service
 public class PostService {

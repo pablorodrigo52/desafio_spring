@@ -1,4 +1,4 @@
-package br.com.mercadolivre.socialmeli.controller;
+package br.com.mercadolivre.socialmeli.user.controller;
 
 
 
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.mercadolivre.socialmeli.dto.User.UserDTO;
-import br.com.mercadolivre.socialmeli.dto.User.UserFollowedDTO;
-import br.com.mercadolivre.socialmeli.dto.User.UserFollowersDTO;
-import br.com.mercadolivre.socialmeli.exception.CommonStatus;
-import br.com.mercadolivre.socialmeli.services.UserService;
+import br.com.mercadolivre.socialmeli.user.dto.UserDTO;
+import br.com.mercadolivre.socialmeli.user.dto.UserFollowedDTO;
+import br.com.mercadolivre.socialmeli.user.dto.UserFollowersDTO;
+import br.com.mercadolivre.socialmeli.user.exception.CommonStatus;
+import br.com.mercadolivre.socialmeli.user.service.UserService;
 
 
 @RestController

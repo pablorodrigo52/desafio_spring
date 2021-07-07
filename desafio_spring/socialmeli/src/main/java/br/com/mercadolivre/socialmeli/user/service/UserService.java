@@ -1,20 +1,18 @@
-package br.com.mercadolivre.socialmeli.services;
+package br.com.mercadolivre.socialmeli.user.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.mercadolivre.socialmeli.dto.User.SimpleUserDTO;
-import br.com.mercadolivre.socialmeli.dto.User.UserDTO;
-import br.com.mercadolivre.socialmeli.dto.User.UserFollowedDTO;
-import br.com.mercadolivre.socialmeli.dto.User.UserFollowersDTO;
-import br.com.mercadolivre.socialmeli.entities.User;
-import br.com.mercadolivre.socialmeli.exception.CommonStatus;
-import br.com.mercadolivre.socialmeli.repository.UserRepository;
+import br.com.mercadolivre.socialmeli.user.dto.SimpleUserDTO;
+import br.com.mercadolivre.socialmeli.user.dto.UserDTO;
+import br.com.mercadolivre.socialmeli.user.dto.UserFollowedDTO;
+import br.com.mercadolivre.socialmeli.user.dto.UserFollowersDTO;
+import br.com.mercadolivre.socialmeli.user.entities.User;
+import br.com.mercadolivre.socialmeli.user.exception.CommonStatus;
+import br.com.mercadolivre.socialmeli.user.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -54,7 +52,7 @@ public class UserService {
         User user = repository.findById(userId);
         if (user!=null){
             List<User> followers = repository.getFollowers(userId);
-            List<SimpleUserDTO> followersDTOs = new ArrayList<>();
+            List<SimpleUserDTO> followersDTOs;
             followersDTOs = followers.stream().map(SimpleUserDTO::convert).collect(Collectors.toList());
             return new UserFollowersDTO(user.getUuid(), user.getName(), followersDTOs);
         }
@@ -65,7 +63,7 @@ public class UserService {
         User user = repository.findById(userId);
         if (user != null){
             List<User> following = repository.getFollowing(user.getFollowing());
-            List<SimpleUserDTO> followingDTOs = new ArrayList<>();
+            List<SimpleUserDTO> followingDTOs;
             followingDTOs = following.stream().map(SimpleUserDTO::convert).collect(Collectors.toList());
             return new UserFollowedDTO(user.getUuid(), user.getName(), followingDTOs);
         }
