@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.mercadolivre.socialmeli.dto.SimpleUserDTO;
-import br.com.mercadolivre.socialmeli.dto.UserDTO;
-import br.com.mercadolivre.socialmeli.dto.UserFollowedDTO;
-import br.com.mercadolivre.socialmeli.dto.UserFollowersDTO;
+import br.com.mercadolivre.socialmeli.dto.User.SimpleUserDTO;
+import br.com.mercadolivre.socialmeli.dto.User.UserDTO;
+import br.com.mercadolivre.socialmeli.dto.User.UserFollowedDTO;
+import br.com.mercadolivre.socialmeli.dto.User.UserFollowersDTO;
 import br.com.mercadolivre.socialmeli.entities.User;
 import br.com.mercadolivre.socialmeli.exception.CommonStatus;
 import br.com.mercadolivre.socialmeli.repository.UserRepository;

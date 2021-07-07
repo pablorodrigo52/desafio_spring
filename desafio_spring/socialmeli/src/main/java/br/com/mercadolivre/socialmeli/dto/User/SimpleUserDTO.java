@@ -1,4 +1,4 @@
-package br.com.mercadolivre.socialmeli.dto;
+package br.com.mercadolivre.socialmeli.dto.User;
 
 import br.com.mercadolivre.socialmeli.entities.User;
 

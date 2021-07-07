@@ -3,7 +3,7 @@ package br.com.mercadolivre.socialmeli.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.mercadolivre.socialmeli.dto.UserDTO;
+import br.com.mercadolivre.socialmeli.dto.User.UserDTO;
 
 /**
  * User

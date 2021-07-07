@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.mercadolivre.socialmeli.dto.UserDTO;
-import br.com.mercadolivre.socialmeli.dto.UserFollowedDTO;
-import br.com.mercadolivre.socialmeli.dto.UserFollowersDTO;
+import br.com.mercadolivre.socialmeli.dto.User.UserDTO;
+import br.com.mercadolivre.socialmeli.dto.User.UserFollowedDTO;
+import br.com.mercadolivre.socialmeli.dto.User.UserFollowersDTO;
 import br.com.mercadolivre.socialmeli.exception.CommonStatus;
 import br.com.mercadolivre.socialmeli.services.UserService;
-
 
 
 @RestController
