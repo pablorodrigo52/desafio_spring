@@ -6,9 +6,9 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,6 +49,9 @@ public class UserRepository {
         .filter(usr -> usr.getUuid().equals(userId)).findFirst().orElse(null);
     }
 
+    public List<User> getFollowers(Long userId){
+        return getUsers().stream().filter(usr -> usr.getFollowing().contains(userId)).collect(Collectors.toList());
+    }
 
     private List<User> getUsers(){
         List<User> users = new ArrayList<>();

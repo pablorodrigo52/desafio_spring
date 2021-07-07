@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.mercadolivre.socialmeli.dto.UserDTO;
+import br.com.mercadolivre.socialmeli.dto.UserFollowersDTO;
 import br.com.mercadolivre.socialmeli.exception.CommonStatus;
 import br.com.mercadolivre.socialmeli.services.UserService;
+
+
 
 @RestController
 @RequestMapping(value = "/users", produces = "application/json")
@@ -38,7 +41,6 @@ public class UsersController {
         }
     }
 
-
     @GetMapping("/{userId}/followers/count")
     public ResponseEntity<?> countFollows (@PathVariable Long userId){
         UserDTO userDTO = service.countFollows(userId);
@@ -48,6 +50,13 @@ public class UsersController {
         return new  ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-
+    @GetMapping("/{userId}/followers/list")
+    public ResponseEntity<?> followersList (@PathVariable Long userId){
+        UserFollowersDTO followers = service.followersList(userId);
+        if (followers!=null){
+            return new ResponseEntity<>(service.followersList(userId), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("USER DOES NOT EXISTS", HttpStatus.BAD_REQUEST);
+    }
 
 }

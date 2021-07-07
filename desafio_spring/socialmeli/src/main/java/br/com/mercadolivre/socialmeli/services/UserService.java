@@ -1,9 +1,16 @@
 package br.com.mercadolivre.socialmeli.services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.mercadolivre.socialmeli.dto.SimpleUserDTO;
 import br.com.mercadolivre.socialmeli.dto.UserDTO;
+import br.com.mercadolivre.socialmeli.dto.UserFollowersDTO;
 import br.com.mercadolivre.socialmeli.entities.User;
 import br.com.mercadolivre.socialmeli.exception.CommonStatus;
 import br.com.mercadolivre.socialmeli.repository.UserRepository;
@@ -38,6 +45,18 @@ public class UserService {
 
         if (user!=null){
             return UserDTO.convert(user);
+        }
+        return null;
+    }
+
+    public UserFollowersDTO followersList(Long userId) {
+        User user = repository.findById(userId);
+
+        if (user != null){
+            List<User> followers = repository.getFollowers(userId);
+            List<SimpleUserDTO> followersDTOs = new ArrayList<>();
+            followersDTOs = followers.stream().map(SimpleUserDTO::convert).collect(Collectors.toList());
+            return new UserFollowersDTO(user.getUuid(), user.getName(), followersDTOs);
         }
         return null;
     }
