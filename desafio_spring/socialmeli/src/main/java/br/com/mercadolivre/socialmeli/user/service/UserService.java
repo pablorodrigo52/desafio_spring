@@ -28,12 +28,28 @@ public class UserService {
         User userToFollow = repository.findById(userIdToFollow);
 
         if (user!=null && userToFollow!=null){ 
-            if (!user.getFollowing().contains(userIdToFollow)){/* REGRA DE NEGÓCIO: NÃO É PERMITIDO SEGUIR A MESMA PESSOA DUAS VEZES */
+            if (!user.getFollowing().contains(userIdToFollow) && !userId.equals(userIdToFollow)){/* REGRA DE NEGÓCIO: NÃO É PERMITIDO SEGUIR A MESMA PESSOA DUAS VEZES e NÃO POSSO SEGUIR EU MESMO */
                 user.getFollowing().add(userIdToFollow);
                 repository.saveReplacement(user);
                 return CommonStatus.OK;
             } else {
                 return CommonStatus.FOLLOW_NOT_VALID;
+            }
+        }
+        return CommonStatus.USER_NOT_EXISTS;
+    }
+
+    public CommonStatus unsign(Long userId, Long userIdToUnfollow) {
+        User user = repository.findById(userId);
+        User userToFollow = repository.findById(userIdToUnfollow);
+
+        if (user!=null && userToFollow!=null){ 
+            if (user.getFollowing().contains(userIdToUnfollow)){/* REGRA DE NEGÓCIO: NÃO É PERMITIDO DEIXAR DE SEGUIR UMA PESSOA QUE EU NÃO SIGO */
+                user.getFollowing().remove(userIdToUnfollow);
+                repository.saveReplacement(user);
+                return CommonStatus.OK;
+            } else {
+                return CommonStatus.UNFOLLOW_NOT_VALID;
             }
         }
         return CommonStatus.USER_NOT_EXISTS;

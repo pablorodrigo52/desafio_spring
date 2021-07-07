@@ -30,7 +30,7 @@ public class UsersController {
     }
 
     @PostMapping("/{userId}/follow/{userIdToFollow}")
-    public ResponseEntity<?> sign (@PathVariable Long userId, @PathVariable Long userIdToFollow){
+    public ResponseEntity<?> follow (@PathVariable Long userId, @PathVariable Long userIdToFollow){
         CommonStatus status = service.sign(userId, userIdToFollow);
         if (status==CommonStatus.OK){
             return new ResponseEntity<>(HttpStatus.OK);
@@ -40,6 +40,18 @@ public class UsersController {
             return new ResponseEntity<>("CANNOT FOLLOW", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping("/{userId}/unfollow/{userIdToUnfollow}")
+    public ResponseEntity<?> unfollow(@PathVariable Long userId, @PathVariable Long userIdToUnfollow){
+        CommonStatus status = service.unsign(userId, userIdToUnfollow);
+        if (status==CommonStatus.OK){
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else if (status==CommonStatus.USER_NOT_EXISTS){
+            return new ResponseEntity<>("USER DOES NOT EXISTS", HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>("CANNOT UNFOLLOW", HttpStatus.BAD_REQUEST);
+        }
+    }    
 
     @GetMapping("/{userId}/followers/count")
     public ResponseEntity<?> countFollows (@PathVariable Long userId){
