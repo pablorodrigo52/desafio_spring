@@ -8,13 +8,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.mercadolivre.socialmeli.user.dto.UserDTO;
 import br.com.mercadolivre.socialmeli.user.dto.UserFollowedDTO;
 import br.com.mercadolivre.socialmeli.user.dto.UserFollowersDTO;
-import br.com.mercadolivre.socialmeli.user.exception.CommonStatus;
+import br.com.mercadolivre.socialmeli.user.enums.CommonStatus;
 import br.com.mercadolivre.socialmeli.user.service.UserService;
 
 
@@ -63,8 +65,8 @@ public class UsersController {
     }
 
     @GetMapping("/{userId}/followers/list")
-    public ResponseEntity<?> followersList (@PathVariable Long userId){
-        UserFollowersDTO followers = service.followersList(userId);
+    public ResponseEntity<?> followersList (@PathVariable Long userId,  @RequestParam(defaultValue = "") String order){
+        UserFollowersDTO followers = service.followersList(userId, order);
         if (followers!=null){
             return new ResponseEntity<>(followers, HttpStatus.OK);
         }
@@ -72,8 +74,8 @@ public class UsersController {
     }
 
     @GetMapping("/{userId}/followed/list")
-    public ResponseEntity<?> followingList (@PathVariable Long userId){
-        UserFollowedDTO followed = service.followingList(userId);
+    public ResponseEntity<?> followingList (@PathVariable Long userId, @RequestParam(defaultValue = "") String order){
+        UserFollowedDTO followed = service.followingList(userId, order);
         if (followed!=null){
             return new ResponseEntity<>(followed, HttpStatus.OK);
         }

@@ -1,4 +1,4 @@
-package br.com.mercadolivre.socialmeli.user.exception;
+package br.com.mercadolivre.socialmeli.user.enums;
 
 public enum CommonStatus {
     OK,
