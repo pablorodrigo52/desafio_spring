@@ -11,13 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.mercadolivre.socialmeli.dto.Post.PostDTO;
+import br.com.mercadolivre.socialmeli.dto.Post.PostsByFollowedDTO;
 import br.com.mercadolivre.socialmeli.services.PostService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping("/products")
 public class PostController {
 
-    private PostService service;
+    private final PostService service;
 
     @Autowired
     public PostController (PostService service){
@@ -26,7 +30,15 @@ public class PostController {
 
     @PostMapping("/newpost")
     public ResponseEntity <?> newPost(@Valid @RequestBody PostDTO post){
-        return new ResponseEntity<>(this.service.newPost(post), HttpStatus.OK);
-    } 
+        return new ResponseEntity<>(service.newPost(post), HttpStatus.OK);
+    }
 
+    @GetMapping("/followed/{userId}/list")
+    public ResponseEntity <?> postListByUserFollow(@PathVariable Long userId){
+        PostsByFollowedDTO postListByUserFollow = service.postListByUserFollow(userId);
+        if (postListByUserFollow!=null){
+            return new ResponseEntity<>(postListByUserFollow, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("USER DOES NOT EXISTS", HttpStatus.BAD_REQUEST);
+    }
 }

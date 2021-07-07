@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,6 +34,12 @@ public class PostRepository {
         return writePosts(posts);
     }
 
+    public List<Post> getPosts(Long userId){
+        return getPosts()
+        .stream()
+        .filter(post -> post.getUserId().equals(userId))
+        .collect(Collectors.toList());
+    }
 
     private List<Post> getPosts(){
         List<Post> posts = new ArrayList<>();

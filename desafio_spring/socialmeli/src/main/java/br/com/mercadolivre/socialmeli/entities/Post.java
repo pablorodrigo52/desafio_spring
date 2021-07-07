@@ -3,15 +3,7 @@ package br.com.mercadolivre.socialmeli.entities;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.OptBoolean;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import br.com.mercadolivre.socialmeli.dto.Post.PostDTO;
-
-public class Post {
+public class Post implements Comparable<Post>{
 
     private Long userId, id_post;
     private Date date;
@@ -78,6 +70,11 @@ public class Post {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    @Override
+    public int compareTo(Post o) {
+        return this.getDate().compareTo(o.getDate());
     }
     
 }
