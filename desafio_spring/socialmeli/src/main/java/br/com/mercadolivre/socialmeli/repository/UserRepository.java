@@ -53,6 +53,19 @@ public class UserRepository {
         return getUsers().stream().filter(usr -> usr.getFollowing().contains(userId)).collect(Collectors.toList());
     }
 
+    public List<User> getFollowing(List<Long> followingsIds){
+        List<User> users = getUsers();
+        List<User> following = new ArrayList<>();
+        for(int i =0; i < followingsIds.size(); i++){
+            Long follow = followingsIds.get(i);
+            User user = users.stream().filter(usr -> usr.getUuid().equals(follow)).findFirst().orElse(null);
+            if (user!=null){
+                following.add(user);
+            }
+        }
+        return following;
+    }
+
     private List<User> getUsers(){
         List<User> users = new ArrayList<>();
         try{

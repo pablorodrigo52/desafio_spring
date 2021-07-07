@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.mercadolivre.socialmeli.dto.SimpleUserDTO;
 import br.com.mercadolivre.socialmeli.dto.UserDTO;
+import br.com.mercadolivre.socialmeli.dto.UserFollowedDTO;
 import br.com.mercadolivre.socialmeli.dto.UserFollowersDTO;
 import br.com.mercadolivre.socialmeli.entities.User;
 import br.com.mercadolivre.socialmeli.exception.CommonStatus;
@@ -57,6 +58,17 @@ public class UserService {
             List<SimpleUserDTO> followersDTOs = new ArrayList<>();
             followersDTOs = followers.stream().map(SimpleUserDTO::convert).collect(Collectors.toList());
             return new UserFollowersDTO(user.getUuid(), user.getName(), followersDTOs);
+        }
+        return null;
+    }
+
+    public UserFollowedDTO followingList(Long userId) {
+        User user = repository.findById(userId);
+        if (user != null){
+            List<User> following = repository.getFollowing(user.getFollowing());
+            List<SimpleUserDTO> followingDTOs = new ArrayList<>();
+            followingDTOs = following.stream().map(SimpleUserDTO::convert).collect(Collectors.toList());
+            return new UserFollowedDTO(user.getUuid(), user.getName(), followingDTOs);
         }
         return null;
     }
