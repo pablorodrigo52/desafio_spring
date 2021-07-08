@@ -12,6 +12,7 @@ public class UserDTO {
 
     private Long uuid;
     private String name;
+    private int followersCount;
     private List<Long> following; // QUEM EU ESTOU SEGUINDO
 
     public UserDTO() {
@@ -22,6 +23,14 @@ public class UserDTO {
         this.name = name;
         this.following = new ArrayList<>();
     }
+
+    public UserDTO(long uuid, String name, int followersCount) {
+        this.uuid = uuid;
+        this.name = name;
+        this.following = new ArrayList<>();
+        this.followersCount = followersCount;
+    }
+
 
     public UserDTO(long uuid, String name, List<Long> following) {
         this.uuid = uuid;
@@ -63,7 +72,7 @@ public class UserDTO {
         return "{" +
             " \"userId\":" + getUuid() + "" +
             ", \"userName\":\"" + getName() + "\"" +
-            ", \"followers_count\":" + getFollowing().size() + "" +
+            ", \"followers_count\":" + followersCount + "" +
             "}";
     }
 

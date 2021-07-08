@@ -61,7 +61,8 @@ public class UserService {
     public UserDTO countFollows(Long userId){
         User user = repository.findById(userId);
         if (user!=null){
-            return UserDTO.convert(user);
+            int followersCount = repository.getFollowers(userId).size();
+            return new UserDTO(user.getUuid(), user.getName(), followersCount);
         }
         return null;
     }
