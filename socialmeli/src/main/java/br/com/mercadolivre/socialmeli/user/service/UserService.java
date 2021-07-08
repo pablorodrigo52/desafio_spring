@@ -70,13 +70,11 @@ public class UserService {
     public UserFollowersDTO followersList(Long userId, String order) {
         User user = repository.findById(userId);
         if (user!=null){
-            List<User> followers = repository.getFollowers(userId);
-            List<SimpleUserDTO> followersDTOs;
-            followersDTOs = followers
+            List<SimpleUserDTO> followers = repository.getFollowers(userId)
                 .stream()
                 .map(SimpleUserDTO::convert)
                 .collect(Collectors.toList());
-
+                
             if (order!=null){ // SE HOUVE UMA ORDENACAO QUE FOI PASSADA POR PARAMETRO NA CHAMADA DA API, EXECUTE
                 if (order.equalsIgnoreCase(OrderBy.NAME_ASC.toString())){
                     comparatorFollowers = Comparator.naturalOrder();
@@ -84,13 +82,11 @@ public class UserService {
                     comparatorFollowers = Comparator.reverseOrder();
                 }
             }
-
-            followersDTOs = followersDTOs
+            followers = followers
                 .stream()
                 .sorted( (f1,f2) -> comparatorFollowers.compare(f1.getName(), f2.getName()))
                 .collect(Collectors.toList());
-            
-            return new UserFollowersDTO(user.getUuid(), user.getName(), followersDTOs);
+            return new UserFollowersDTO(user.getUuid(), user.getName(), followers);
         }
         return null;
     }
@@ -98,13 +94,11 @@ public class UserService {
     public UserFollowedDTO followingList(Long userId, String order) {
         User user = repository.findById(userId);
         if (user != null){
-            List<User> following = repository.getFollowing(user.getFollowing());
-            List<SimpleUserDTO> followingDTOs;
-            followingDTOs = following
+            List<SimpleUserDTO> following = repository.getFollowing(user.getFollowing())
                 .stream()
                 .map(SimpleUserDTO::convert)
                 .collect(Collectors.toList());
-
+        
             if (order!=null){ // SE HOUVE UMA ORDENACAO QUE FOI PASSADA POR PARAMETRO NA CHAMADA DA API, EXECUTE
                 if (order.equalsIgnoreCase(OrderBy.NAME_ASC.toString())){
                     comparatorFollowers = Comparator.naturalOrder();
@@ -113,12 +107,11 @@ public class UserService {
                 }
             }
 
-            followingDTOs = followingDTOs
+            following = following
                 .stream()
                 .sorted( (f1,f2) -> comparatorFollowers.compare(f1.getName(), f2.getName()))
                 .collect(Collectors.toList());
-
-            return new UserFollowedDTO(user.getUuid(), user.getName(), followingDTOs);
+            return new UserFollowedDTO(user.getUuid(), user.getName(), following);
         }
         return null;
     }
