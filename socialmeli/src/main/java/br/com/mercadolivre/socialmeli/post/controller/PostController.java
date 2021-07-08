@@ -51,7 +51,7 @@ public class PostController {
     }
 
     @GetMapping("/followed/{userId}/list")
-    public ResponseEntity <?> postListByUserFollow(@PathVariable Long userId, @RequestParam(defaultValue = "") String order){
+    public ResponseEntity <PostsByFollowedDTO> postListByUserFollow(@PathVariable Long userId, @RequestParam(defaultValue = "") String order){
         PostsByFollowedDTO postListByUserFollow = service.postListByUserFollow(userId, order);
         if (postListByUserFollow!=null){
             return new ResponseEntity<>(postListByUserFollow, HttpStatus.OK);
@@ -60,7 +60,7 @@ public class PostController {
     }
 
     @GetMapping("/{userId}/list")
-    public ResponseEntity<?> promoPostsListByUser(@PathVariable Long userId){
+    public ResponseEntity<PostsByFollowedDTO> promoPostsListByUser(@PathVariable Long userId){
         PostsByFollowedDTO listPromoPosts = service.promoPostsListByUser(userId);
         if (listPromoPosts!=null){
             return new ResponseEntity<>(service.promoPostsListByUser(userId), HttpStatus.OK);
@@ -69,7 +69,7 @@ public class PostController {
     }
 
     @GetMapping("/{userId}/countPromo")
-    public ResponseEntity<?> countPromo (@PathVariable Long userId){
+    public ResponseEntity<String> countPromo (@PathVariable Long userId){
         PromoPostDTO promoPost = service.countPromo(userId);
         if (promoPost!=null){
             return new ResponseEntity<>(promoPost.toString(), HttpStatus.OK);            
