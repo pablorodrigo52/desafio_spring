@@ -34,12 +34,20 @@ public class PostController {
 
     @PostMapping("/newpost")
     public ResponseEntity <PostDTO> newPost(@Valid @RequestBody PostDTO post){
-        return new ResponseEntity<>(service.newPost(post), HttpStatus.OK);
+        PostDTO postDto = service.newPost(post);
+        if (postDto!=null) {
+            return new ResponseEntity<>(service.newPost(post), HttpStatus.OK);
+        }
+        throw new UserNotExistsException(UserNotExistsException.USER_NOT_FOUND_MSG);
     }
 
     @PostMapping("/newpromopost")
     public ResponseEntity<PromoPostDTO> newPost (@Valid @RequestBody PromoPostDTO post){
-        return new ResponseEntity<>(service.newPost(post), HttpStatus.OK);
+        PromoPostDTO postDto = service.newPost(post);
+        if (postDto!=null) {
+            return new ResponseEntity<>(service.newPost(post), HttpStatus.OK);
+        }
+        throw new UserNotExistsException(UserNotExistsException.USER_NOT_FOUND_MSG);
     }
 
     @GetMapping("/followed/{userId}/list")
