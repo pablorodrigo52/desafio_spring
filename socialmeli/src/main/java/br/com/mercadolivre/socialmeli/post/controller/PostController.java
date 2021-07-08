@@ -60,10 +60,10 @@ public class PostController {
     }
 
     @GetMapping("/{userId}/list")
-    public ResponseEntity<PostsUserDTO> promoPostsListByUser(@PathVariable Long userId){
-        PostsUserDTO listPromoPosts = service.promoPostsListByUser(userId);
+    public ResponseEntity<PostsUserDTO> promoPostsListByUser(@PathVariable Long userId, @RequestParam(defaultValue = "") String order){
+        PostsUserDTO listPromoPosts = service.promoPostsListByUser(userId, order);
         if (listPromoPosts!=null){
-            return new ResponseEntity<>(service.promoPostsListByUser(userId), HttpStatus.OK);
+            return new ResponseEntity<>(listPromoPosts, HttpStatus.OK);
         }
         throw new UserNotExistsException(UserNotExistsException.USER_NOT_FOUND_MSG);
     }

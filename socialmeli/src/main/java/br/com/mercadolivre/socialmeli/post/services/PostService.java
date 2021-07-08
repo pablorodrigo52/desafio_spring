@@ -24,6 +24,8 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+
+    private Comparator<String> comparatorProduct = Comparator.naturalOrder();
     
     @Autowired
     public PostService(PostRepository postRepository, UserRepository userRepository) {
@@ -73,13 +75,25 @@ public class PostService {
         return null;
     }
     
-    public PostsUserDTO promoPostsListByUser(Long userId) {
+    public PostsUserDTO promoPostsListByUser(Long userId, String order) {
         User user = userRepository.findById(userId);
         if (user!=null){
             List<Post> promoPosts = postRepository.getPromotionalPosts(userId);
             PostsUserDTO posts = new PostsUserDTO();
             posts.setUserId(userId);
             posts.setUserName(user.getName());
+
+            if (order!=null){// SE HOUVE UMA ORDENACAO QUE FOI PASSADA POR PARAMETRO NA CHAMADA DA API, EXECUTE
+                if (order.equalsIgnoreCase(OrderBy.NAME_ASC.toString())){
+                    comparatorProduct = Comparator.naturalOrder();
+                } else if (order.equalsIgnoreCase(OrderBy.NAME_DESC.toString())){
+                    comparatorProduct = Comparator.reverseOrder();
+                }
+            }
+            promoPosts = promoPosts
+                .stream()
+                .sorted( (f1,f2) -> comparatorProduct.compare(f1.getDetail().getProduct_name(), f2.getDetail().getProduct_name()))
+                .collect(Collectors.toList());
             for (Post post : promoPosts) {
                 posts.addPost(SimplePostDTO.convert(post));
             }
