@@ -15,6 +15,7 @@ import br.com.mercadolivre.socialmeli.post.dto.PostDTO;
 import br.com.mercadolivre.socialmeli.post.dto.PostsByFollowedDTO;
 import br.com.mercadolivre.socialmeli.post.dto.PromoPostDTO;
 import br.com.mercadolivre.socialmeli.post.services.PostService;
+import br.com.mercadolivre.socialmeli.user.exception.UserNotExistsException;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,7 +48,7 @@ public class PostController {
         if (postListByUserFollow!=null){
             return new ResponseEntity<>(postListByUserFollow, HttpStatus.OK);
         }
-        return new ResponseEntity<>("USER DOES NOT EXISTS", HttpStatus.BAD_REQUEST);
+        throw new UserNotExistsException(UserNotExistsException.USER_NOT_FOUND_MSG);
     }
 
     @GetMapping("/{userId}/list")
@@ -56,7 +57,7 @@ public class PostController {
         if (listPromoPosts!=null){
             return new ResponseEntity<>(service.promoPostsListByUser(userId), HttpStatus.OK);
         }
-        return new ResponseEntity<>("USER DOES NOT EXISTS", HttpStatus.BAD_REQUEST);
+        throw new UserNotExistsException(UserNotExistsException.USER_NOT_FOUND_MSG);
     }
 
     @GetMapping("/{userId}/countPromo")
@@ -65,9 +66,6 @@ public class PostController {
         if (promoPost!=null){
             return new ResponseEntity<>(promoPost.toString(), HttpStatus.OK);            
         }
-        return new ResponseEntity<>("USER DOES NOT EXISTS", HttpStatus.BAD_REQUEST);
+        throw new UserNotExistsException(UserNotExistsException.USER_NOT_FOUND_MSG);
     }
-
-
-
 }
