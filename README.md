@@ -54,4 +54,4 @@
 ## Count promotional post by user id
     - GET /products/{userId}/countPromo/
 ## Promotional posts list by user id
-    - GET /products/{userId}/list/
+    - GET /products/{userId}/list?[order=[name_asc][name_desc]]
