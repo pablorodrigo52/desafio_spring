@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.mercadolivre.socialmeli.post.dto.PostDTO;
-import br.com.mercadolivre.socialmeli.post.dto.PostsByFollowedDTO;
+import br.com.mercadolivre.socialmeli.post.dto.PostsUserDTO;
 import br.com.mercadolivre.socialmeli.post.dto.PromoPostDTO;
 import br.com.mercadolivre.socialmeli.post.dto.SimplePostDTO;
 import br.com.mercadolivre.socialmeli.post.entities.Post;
@@ -45,12 +45,10 @@ public class PostService {
         return null;
     }
 
-    public PostsByFollowedDTO postListByUserFollow(Long userId, String order) {
+    public PostsUserDTO postListByUserFollow(Long userId, String order) {
         User user = userRepository.findById(userId);
         if (user!=null){
-            PostsByFollowedDTO posts = new PostsByFollowedDTO();
-            posts.setUserId(userId);
-            posts.setUserName(user.getName());
+            PostsUserDTO posts = new PostsUserDTO(user.getName(), userId);
             for (Long id : user.getFollowing()) { // TODOS OS VENDEDORES QUE userId ESTÁ SEGUINDO
                 List<Post> postsSeller = postRepository.getPosts(id);
                 postsSeller = postsSeller
@@ -74,11 +72,11 @@ public class PostService {
         }
         return null;
     }
-    public PostsByFollowedDTO promoPostsListByUser(Long userId) {
+    public PostsUserDTO promoPostsListByUser(Long userId) {
         User user = userRepository.findById(userId);
         if (user!=null){
             List<Post> promoPosts = postRepository.getPromotionalPosts(userId);
-            PostsByFollowedDTO posts = new PostsByFollowedDTO();
+            PostsUserDTO posts = new PostsUserDTO();
             posts.setUserId(userId);
             posts.setUserName(user.getName());
             for (Post post : promoPosts) {

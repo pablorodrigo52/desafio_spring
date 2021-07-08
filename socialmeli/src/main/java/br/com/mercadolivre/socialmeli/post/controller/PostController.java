@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.mercadolivre.socialmeli.post.dto.PostDTO;
-import br.com.mercadolivre.socialmeli.post.dto.PostsByFollowedDTO;
+import br.com.mercadolivre.socialmeli.post.dto.PostsUserDTO;
 import br.com.mercadolivre.socialmeli.post.dto.PromoPostDTO;
 import br.com.mercadolivre.socialmeli.post.services.PostService;
 import br.com.mercadolivre.socialmeli.user.exception.UserNotExistsException;
@@ -51,8 +51,8 @@ public class PostController {
     }
 
     @GetMapping("/followed/{userId}/list")
-    public ResponseEntity <PostsByFollowedDTO> postListByUserFollow(@PathVariable Long userId, @RequestParam(defaultValue = "") String order){
-        PostsByFollowedDTO postListByUserFollow = service.postListByUserFollow(userId, order);
+    public ResponseEntity <PostsUserDTO> postListByUserFollow(@PathVariable Long userId, @RequestParam(defaultValue = "") String order){
+        PostsUserDTO postListByUserFollow = service.postListByUserFollow(userId, order);
         if (postListByUserFollow!=null){
             return new ResponseEntity<>(postListByUserFollow, HttpStatus.OK);
         }
@@ -60,8 +60,8 @@ public class PostController {
     }
 
     @GetMapping("/{userId}/list")
-    public ResponseEntity<PostsByFollowedDTO> promoPostsListByUser(@PathVariable Long userId){
-        PostsByFollowedDTO listPromoPosts = service.promoPostsListByUser(userId);
+    public ResponseEntity<PostsUserDTO> promoPostsListByUser(@PathVariable Long userId){
+        PostsUserDTO listPromoPosts = service.promoPostsListByUser(userId);
         if (listPromoPosts!=null){
             return new ResponseEntity<>(service.promoPostsListByUser(userId), HttpStatus.OK);
         }
