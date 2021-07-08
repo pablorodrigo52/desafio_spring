@@ -16,6 +16,8 @@ import br.com.mercadolivre.socialmeli.user.dto.UserDTO;
 import br.com.mercadolivre.socialmeli.user.dto.UserFollowedDTO;
 import br.com.mercadolivre.socialmeli.user.dto.UserFollowersDTO;
 import br.com.mercadolivre.socialmeli.user.enums.CommonStatus;
+import br.com.mercadolivre.socialmeli.user.exception.CantFollowException;
+import br.com.mercadolivre.socialmeli.user.exception.UserNotExistsException;
 import br.com.mercadolivre.socialmeli.user.service.UserService;
 
 
@@ -31,54 +33,54 @@ public class UsersController {
     }
 
     @PostMapping("/{userId}/follow/{userIdToFollow}")
-    public ResponseEntity<?> follow (@PathVariable Long userId, @PathVariable Long userIdToFollow){
+    public ResponseEntity<HttpStatus> follow (@PathVariable Long userId, @PathVariable Long userIdToFollow){
         CommonStatus status = service.sign(userId, userIdToFollow);
         if (status==CommonStatus.OK){
             return new ResponseEntity<>(HttpStatus.OK);
         } else if (status==CommonStatus.USER_NOT_EXISTS){
-            return new ResponseEntity<>("USER DOES NOT EXISTS", HttpStatus.BAD_REQUEST);
+            throw new UserNotExistsException(UserNotExistsException.USER_NOT_FOUND_MSG);
         } else {
-            return new ResponseEntity<>("CANNOT FOLLOW", HttpStatus.BAD_REQUEST);
+            throw new CantFollowException(CantFollowException.CANT_FOLLOW_MSG);
         }
     }
 
     @PostMapping("/{userId}/unfollow/{userIdToUnfollow}")
-    public ResponseEntity<?> unfollow(@PathVariable Long userId, @PathVariable Long userIdToUnfollow){
+    public ResponseEntity<HttpStatus> unfollow(@PathVariable Long userId, @PathVariable Long userIdToUnfollow){
         CommonStatus status = service.unsign(userId, userIdToUnfollow);
         if (status==CommonStatus.OK){
             return new ResponseEntity<>(HttpStatus.OK);
         } else if (status==CommonStatus.USER_NOT_EXISTS){
-            return new ResponseEntity<>("USER DOES NOT EXISTS", HttpStatus.BAD_REQUEST);
+            throw new UserNotExistsException(UserNotExistsException.USER_NOT_FOUND_MSG);
         } else {
-            return new ResponseEntity<>("CANNOT UNFOLLOW", HttpStatus.BAD_REQUEST);
+            throw new CantFollowException(CantFollowException.CANT_FOLLOW_MSG);
         }
     }    
 
     @GetMapping("/{userId}/followers/count")
-    public ResponseEntity<?> countFollows (@PathVariable Long userId){
+    public ResponseEntity<String> countFollows (@PathVariable Long userId){
         UserDTO userDTO = service.countFollows(userId);
         if (userDTO!=null){
             return new ResponseEntity<>(userDTO.followersCount(), HttpStatus.OK);
         }
-        return new  ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        throw new UserNotExistsException(UserNotExistsException.USER_NOT_FOUND_MSG);
     }
 
     @GetMapping("/{userId}/followers/list")
-    public ResponseEntity<?> followersList (@PathVariable Long userId,  @RequestParam(defaultValue = "") String order){
+    public ResponseEntity<UserFollowersDTO> followersList (@PathVariable Long userId,  @RequestParam(defaultValue = "") String order){
         UserFollowersDTO followers = service.followersList(userId, order);
         if (followers!=null){
             return new ResponseEntity<>(followers, HttpStatus.OK);
         }
-        return new ResponseEntity<>("USER DOES NOT EXISTS", HttpStatus.BAD_REQUEST);
+        throw new UserNotExistsException(UserNotExistsException.USER_NOT_FOUND_MSG);
     }
 
     @GetMapping("/{userId}/followed/list")
-    public ResponseEntity<?> followingList (@PathVariable Long userId, @RequestParam(defaultValue = "") String order){
+    public ResponseEntity<UserFollowedDTO> followingList (@PathVariable Long userId, @RequestParam(defaultValue = "") String order){
         UserFollowedDTO followed = service.followingList(userId, order);
         if (followed!=null){
             return new ResponseEntity<>(followed, HttpStatus.OK);
         }
-        return new ResponseEntity<>("USER DOES NOT EXISTS", HttpStatus.BAD_REQUEST);
+        throw new UserNotExistsException(UserNotExistsException.USER_NOT_FOUND_MSG);
     }
 
 }
