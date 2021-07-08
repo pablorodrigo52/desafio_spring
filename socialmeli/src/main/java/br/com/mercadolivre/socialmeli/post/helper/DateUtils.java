@@ -5,6 +5,8 @@ import java.util.Date;
 
 public class DateUtils {
     
+    private DateUtils(){}
+
     public static Date now() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -14);

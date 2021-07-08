@@ -18,6 +18,7 @@ public class PostsUserDTO {
     public PostsUserDTO(String userName, Long userId) {
         this.userName = userName;
         this.userId = userId;
+        this.posts = new ArrayList<>();
     }
 
     public PostsUserDTO(String userName, Long userId, List<SimplePostDTO> posts) {

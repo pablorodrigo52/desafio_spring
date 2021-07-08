@@ -26,8 +26,6 @@ public class PostRepository {
 
     private static File FILE = new File("post.json");
 
-    
-
     public boolean save(Post post){
         List<Post> posts = getPosts();
         posts.add(post);

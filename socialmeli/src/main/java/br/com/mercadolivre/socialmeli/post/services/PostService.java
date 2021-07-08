@@ -56,7 +56,7 @@ public class PostService {
                     .filter(post -> post.getDate().after(DateUtils.now()))
                     .collect(Collectors.toList());                
                 
-                if (order!=null){ // SE HOUVE UMA ORDENACAO QUE FOI PASSADA POR PARAMETRO NA CHAMADA DA API, EXECUTE
+                if (order!=null){ // SE HOUVE UMA ORDENACAO QUE FOI PASSADA POR PARAMETRO NA CHAMADA DA API, EXECUTE:
                     if (order.equalsIgnoreCase(OrderBy.DATE_ASC.toString())){
                         postsSeller.sort(Comparator.naturalOrder());                        
                     } else if (order.equalsIgnoreCase(OrderBy.DATE_DESC.toString())){
@@ -72,6 +72,7 @@ public class PostService {
         }
         return null;
     }
+    
     public PostsUserDTO promoPostsListByUser(Long userId) {
         User user = userRepository.findById(userId);
         if (user!=null){
