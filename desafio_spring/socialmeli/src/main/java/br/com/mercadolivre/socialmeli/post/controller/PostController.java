@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.mercadolivre.socialmeli.post.dto.PostDTO;
@@ -30,13 +31,13 @@ public class PostController {
     }
 
     @PostMapping("/newpost")
-    public ResponseEntity <?> newPost(@Valid @RequestBody PostDTO post){
+    public ResponseEntity <PostDTO> newPost(@Valid @RequestBody PostDTO post){
         return new ResponseEntity<>(service.newPost(post), HttpStatus.OK);
     }
 
     @GetMapping("/followed/{userId}/list")
-    public ResponseEntity <?> postListByUserFollow(@PathVariable Long userId){
-        PostsByFollowedDTO postListByUserFollow = service.postListByUserFollow(userId);
+    public ResponseEntity <?> postListByUserFollow(@PathVariable Long userId, @RequestParam(defaultValue = "") String order){
+        PostsByFollowedDTO postListByUserFollow = service.postListByUserFollow(userId, order);
         if (postListByUserFollow!=null){
             return new ResponseEntity<>(postListByUserFollow, HttpStatus.OK);
         }
