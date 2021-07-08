@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.mercadolivre.socialmeli.post.dto.PostDTO;
 import br.com.mercadolivre.socialmeli.post.dto.PostsByFollowedDTO;
+import br.com.mercadolivre.socialmeli.post.dto.PromoPostDTO;
 import br.com.mercadolivre.socialmeli.post.services.PostService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping(value = "/products", produces = "application/json")
 public class PostController {
 
     private final PostService service;
@@ -35,6 +36,11 @@ public class PostController {
         return new ResponseEntity<>(service.newPost(post), HttpStatus.OK);
     }
 
+    @PostMapping("/newpromopost")
+    public ResponseEntity<PromoPostDTO> newPost (@Valid @RequestBody PromoPostDTO post){
+        return new ResponseEntity<>(service.newPost(post), HttpStatus.OK);
+    }
+
     @GetMapping("/followed/{userId}/list")
     public ResponseEntity <?> postListByUserFollow(@PathVariable Long userId, @RequestParam(defaultValue = "") String order){
         PostsByFollowedDTO postListByUserFollow = service.postListByUserFollow(userId, order);
@@ -43,4 +49,25 @@ public class PostController {
         }
         return new ResponseEntity<>("USER DOES NOT EXISTS", HttpStatus.BAD_REQUEST);
     }
+
+    @GetMapping("/{userId}/list")
+    public ResponseEntity<?> promoPostsListByUser(@PathVariable Long userId){
+        PostsByFollowedDTO listPromoPosts = service.promoPostsListByUser(userId);
+        if (listPromoPosts!=null){
+            return new ResponseEntity<>(service.promoPostsListByUser(userId), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("USER DOES NOT EXISTS", HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/{userId}/countPromo")
+    public ResponseEntity<?> countPromo (@PathVariable Long userId){
+        PromoPostDTO promoPost = service.countPromo(userId);
+        if (promoPost!=null){
+            return new ResponseEntity<>(promoPost.toString(), HttpStatus.OK);            
+        }
+        return new ResponseEntity<>("USER DOES NOT EXISTS", HttpStatus.BAD_REQUEST);
+    }
+
+
+
 }

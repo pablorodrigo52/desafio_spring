@@ -41,6 +41,13 @@ public class PostRepository {
         .collect(Collectors.toList());
     }
 
+    public List<Post> getPromotionalPosts(Long userId){
+        return getPosts()
+            .stream()
+            .filter(post -> (post.getUserId().equals(userId) && post.getHasPromo()))
+            .collect(Collectors.toList());
+    }
+
     private List<Post> getPosts(){
         List<Post> posts = new ArrayList<>();
         try{

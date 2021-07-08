@@ -10,6 +10,8 @@ public class Post implements Comparable<Post>{
     private Product detail;
     private int category;
     private BigDecimal price;
+    private boolean hasPromo = false;
+    private BigDecimal discount;
 
     public Post() {
     }
@@ -23,6 +25,16 @@ public class Post implements Comparable<Post>{
         this.price = price;
     }
 
+    public Post(Long userId, Long id_post, Date date, Product detail, int category, BigDecimal price, boolean hasPromo, BigDecimal discount) {
+        this.userId = userId;
+        this.id_post = id_post;
+        this.date = date;
+        this.detail = detail;
+        this.category = category;
+        this.price = price;
+        this.hasPromo = hasPromo;
+        this.discount = discount;
+    }
 
     public Long getUserId() {
         return this.userId;
@@ -70,6 +82,26 @@ public class Post implements Comparable<Post>{
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public boolean isHasPromo() {
+        return this.hasPromo;
+    }
+
+    public boolean getHasPromo() {
+        return this.hasPromo;
+    }
+
+    public void setHasPromo(boolean hasPromo) {
+        this.hasPromo = hasPromo;
+    }
+
+    public BigDecimal getDiscount() {
+        return this.discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
     }
 
     @Override

@@ -7,6 +7,7 @@ import java.util.List;
 
 public class PostsByFollowedDTO {
 
+    private String userName;
     private Long userId;
     List<SimplePostDTO> posts;
 
@@ -14,9 +15,18 @@ public class PostsByFollowedDTO {
         this.posts = new ArrayList<>();
     }
 
-    public PostsByFollowedDTO(Long userId, List<SimplePostDTO> posts) {
+    public PostsByFollowedDTO(String userName, Long userId, List<SimplePostDTO> posts) {
+        this.userName = userName;
         this.userId = userId;
         this.posts = posts;
+    }
+
+    public String getUserName() {
+        return this.userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public Long getUserId() {

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.mercadolivre.socialmeli.post.dto.PostDTO;
 import br.com.mercadolivre.socialmeli.post.dto.PostsByFollowedDTO;
+import br.com.mercadolivre.socialmeli.post.dto.PromoPostDTO;
 import br.com.mercadolivre.socialmeli.post.dto.SimplePostDTO;
 import br.com.mercadolivre.socialmeli.post.entities.Post;
 import br.com.mercadolivre.socialmeli.post.helper.DateUtils;
@@ -37,11 +38,19 @@ public class PostService {
         return null;
     }
 
+    public PromoPostDTO newPost(PromoPostDTO post) {
+        if(postRepository.save(PromoPostDTO.convert(post))){
+            return post;
+        }
+        return null;
+    }
+
     public PostsByFollowedDTO postListByUserFollow(Long userId, String order) {
         User user = userRepository.findById(userId);
-        PostsByFollowedDTO posts = new PostsByFollowedDTO();
         if (user!=null){
+            PostsByFollowedDTO posts = new PostsByFollowedDTO();
             posts.setUserId(userId);
+            posts.setUserName(user.getName());
             for (Long id : user.getFollowing()) { // TODOS OS VENDEDORES QUE userId ESTÁ SEGUINDO
                 List<Post> postsSeller = postRepository.getPosts(id);
                 postsSeller = postsSeller
@@ -65,4 +74,28 @@ public class PostService {
         }
         return null;
     }
+    public PostsByFollowedDTO promoPostsListByUser(Long userId) {
+        User user = userRepository.findById(userId);
+        if (user!=null){
+            List<Post> promoPosts = postRepository.getPromotionalPosts(userId);
+            PostsByFollowedDTO posts = new PostsByFollowedDTO();
+            posts.setUserId(userId);
+            posts.setUserName(user.getName());
+            for (Post post : promoPosts) {
+                posts.addPost(SimplePostDTO.convert(post));
+            }
+            return posts;
+        }
+        return null;
+    }
+
+    public PromoPostDTO countPromo(Long userId) {
+        User user = userRepository.findById(userId);
+        if (user!=null){
+            List<Post> promoPosts = postRepository.getPromotionalPosts(userId);
+            return new PromoPostDTO(user.getUuid(), user.getName(), promoPosts.size());
+        }
+        return null;
+    }
+
 }
